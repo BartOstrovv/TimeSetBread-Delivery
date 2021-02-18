@@ -3,26 +3,38 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <algorithm>
 using namespace std;
-class Order
+class Dish
 {
-	string m_NameOrder;
-	string m_AboutOrder;
-	map<string, float>m_SkladOrder;
-	int m_PriceOrder;
+	string m_NameDish;
+	string m_AboutDish;
+	map<string, float>m_SkladDish;
+	int m_PriceDish;
 public:
-	Order(string name, map<string,float>sklad,int price){}//todo
-	int getPrice() { return m_PriceOrder; }
-	string getName() { return m_NameOrder; }
-	void Show()
-	{}
+    Dish(string name, map<string,float>sklad,int price){}//todo
+	int getPrice() { return m_PriceDish; }
+	string getName() { return m_NameDish; }
+	string getAbout() { return m_AboutDish;}
+	void Show(bool withoutSklad = true)
+	{
+		cout << "Dish: " << m_NameDish << " - " << m_AboutDish << "!" << endl;
+		cout << "Price: " << m_PriceDish << endl;
+		if (!withoutSklad)
+		{
+			cout << "=======Sklad========\n";
+			for_each(m_SkladDish.begin(), m_SkladDish.end(), 
+				[&](pair<string, float>p) {cout << p.first << " = " << p.second << " gram"; });
+		}
+	}
+	
 };
 class Restoran
 {
 protected:
 	string m_NameRestoran;
 	string m_Street;
-	vector<Order>m_Menu;
+	vector<Dish>m_Menu;
 	int m_OpenTime;
 	int m_CloseTime;
 };
@@ -39,7 +51,7 @@ public:
 };
 class Admin: public Person
 {
-	
+	string m_password;
 public:
 	void EditOrBuy(string nameOrder) override
 	{
@@ -54,13 +66,13 @@ public:
 };
 class User : public Person
 {
-	vector<Order>Basket;
+	vector<Dish>Basket;
 	string m_street;
 	int m_MaxCash;
 public:
 	void EditOrBuy(string nameOrder) override
 	{
-		for (auto i : m_Menu)
+		for (auto &i : m_Menu)
 			if (i.getName() == nameOrder)
 			{
 				Basket.push_back(i);
