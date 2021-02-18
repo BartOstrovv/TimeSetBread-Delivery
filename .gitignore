@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+#Linker files
+*.ilk
+#Debugger files
+*.pdb
+#User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
