@@ -5,8 +5,6 @@
 #include <map>
 #include <algorithm>
 using namespace std;
-// Пишемо тут? в develop
-// а потім вже в master?
 class Dish
 {
 	string m_NameDish;
