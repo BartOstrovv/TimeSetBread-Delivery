@@ -80,5 +80,6 @@ public:
 				Basket.push_back(i);
 			}
 		///////todo
+		cout << "added";
 	}
 };
