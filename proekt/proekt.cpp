@@ -86,4 +86,5 @@ int main(int argc, char* argv[])
 {
 	Dish cez("Cezar", "Ahyennuy salat", map<string, float>{make_pair("Povmidor", 0.25),make_pair("Orgirok", 0.5)},100);
 	cez.Show();
+	cout << "Step" << endl;
 }
