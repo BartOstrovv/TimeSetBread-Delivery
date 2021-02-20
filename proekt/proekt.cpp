@@ -12,15 +12,15 @@ struct Dish
 	string m_About;
 	string m_Weight;
 	string m_Price;
-	int count = 1;
-	Dish() {};
-	Dish(string n, string w, string p) :m_Name(n), m_Weight(w), m_Price(p) {};
+	int m_numberOfDish;
+	Dish() {}
+	Dish(string n, string w, string p) :m_Name(n), m_Weight(w), m_Price(p) {}
 	void Show()
 	{
 		cout << "Name: " <<m_Name << " -- " << m_About << endl;
 		cout << "Weight: " << m_Weight << endl;
 		cout << "Price: " << m_Price << endl;
-		cout << "==============\n";
+		
 	}
 };
 class Restoran
@@ -53,6 +53,12 @@ public:
 			cout << "Error open file: " << ex.what() << endl;
 		}
 	}
+	
+	Dish getDish(int number)
+	{
+		return m_Menu[number-1];
+	}
+
 	void ShowInfoRest()
 	{
 		cout << "Name restoran: " << m_NameRest << endl;
@@ -65,28 +71,49 @@ public:
 };
 class Basket
 {
-	vector<Dish> PokypkaBlya;
-	int countElement;
+	vector<Dish> m_buy;
 public:
-	void AddElement(Dish obj) { PokypkaBlya.push_back(obj); countElement++; }
+	void AddElement(Dish obj, int nNumber = 1) 
+	{ 
+		obj.m_numberOfDish = nNumber;
+		m_buy.push_back(obj);
+	}
 	void DelElement(int name) 
 	{ 
-		PokypkaBlya.erase(PokypkaBlya.begin() + name-1);
-	 countElement--;
+		m_buy.erase(m_buy.begin() + name-1);
 	}
 	void ShowBasket()
 	{
+		int nSum = 0;
 		cout << "===================In basket===========\n";
-		for (auto &i : PokypkaBlya) i.Show();
-		cout << "\t";
+		cout << cout.width(30) << m_buy.size() << " Element" << endl;
+
+		for (auto& i : m_buy)
+		{
+			i.Show();
+			nSum += (stoi(i.m_Price) * i.m_numberOfDish);
+			cout << "Number of dish: " << i.m_numberOfDish << endl;
+			cout << "==============\n";
+		}
+		cout << "Total: " << nSum << endl;
 	}
+
+	void addNumber(string name, int number)
+	{
+		auto it = find_if(m_buy.begin(), m_buy.end(), [=](Dish obj)->bool
+			{
+				return obj.m_Name == name;
+			});
+		it->m_numberOfDish = number;
+	}
+
 	bool SaveCheck(string namefile)
 	{
 		ofstream outFile(namefile, ofstream::out);
 		try
 		{
 			if (!outFile.is_open()) throw 0;
-			for_each(PokypkaBlya.begin(), PokypkaBlya.end(),
+			for_each(m_buy.begin(), m_buy.end(),
 				[&](Dish vd) {
 					outFile << "Name: " << vd.m_Name << " | ";
 					outFile << "Price: " << vd.m_Price << endl;
@@ -103,13 +130,16 @@ public:
 
 int main()
 {
+	Restoran buk("Pobeda", "Stysa 2", "9/10", "LoadMenuToRestoran.txt");
+	buk.ShowInfoRest();
 
 	Basket bas;
 	bas.AddElement(Dish("Cesar", "122", "113"));
 	bas.AddElement(Dish("Cesar", "12", "200"));
 	bas.AddElement(Dish("Shuba", "122", "113"));
 	bas.AddElement(Dish("Olive", "122", "113"));
+	bas.AddElement(buk.getDish(2),2);
+	bas.ShowBasket();
 	bas.SaveCheck("testSaveCheck.txt");
-	Restoran buk("Pobeda", "Stysa 2", "9/10", "LoadMenuToRestoran.txt");
-	buk.ShowInfoRest();
+
 }
