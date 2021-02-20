@@ -12,9 +12,8 @@ class Dish
 	map<string, float>m_SkladDish;
 	int m_PriceDish;
 public:
-	Dish(string name, map<string, float>sklad, int price)
-	{
-	}
+	Dish(string name,string about, map<string, float>sklad, int price):
+		m_NameDish(name), m_AboutDish(about),m_SkladDish(sklad),m_PriceDish(price){}
 	int getPrice() { return m_PriceDish; }
 	string getName() { return m_NameDish; }
 	string getAbout() { return m_AboutDish;}
@@ -22,11 +21,11 @@ public:
 	{
 		cout << "Dish: " << m_NameDish << " - " << m_AboutDish << "!" << endl;
 		cout << "Price: " << m_PriceDish << endl;
-		if (!withoutSklad)///
+		if (withoutSklad)
 		{
 			cout << "=======Sklad========\n";
 			for_each(m_SkladDish.begin(), m_SkladDish.end(), 
-				[&](pair<string, float>p) {cout << p.first << " = " << p.second << " gram"; });
+				[&](pair<string, float>p) {cout << p.first << " = " << p.second << " gram\n"; });
 		}
 	}
 	
@@ -57,7 +56,7 @@ class Admin: public Person
 public:
 	void EditOrBuy(string nameOrder) override
 	{
-		for(auto i :m_Menu)
+		for(auto &i :m_Menu)
 			if (i.getName()==nameOrder)
 			{
 				//setName
@@ -82,3 +81,8 @@ public:
 		///////todo
 	}
 };
+int main(int argc, char* argv[])
+{
+	Dish cez("Cezar", "Ahyennuy salat", map<string, float>{make_pair("Povmidor", 0.25),make_pair("Orgirok", 0.5)},100);
+	cez.Show();
+}
