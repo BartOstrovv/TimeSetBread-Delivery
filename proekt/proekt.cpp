@@ -25,6 +25,7 @@ public:
 		if (!withoutSklad)///
 		{
 			cout << "=======Sklad========\n";
+			cout << "Stepan" << endl;
 			for_each(m_SkladDish.begin(), m_SkladDish.end(), 
 				[&](pair<string, float>p) {cout << p.first << " = " << p.second << " gram"; });
 		}
