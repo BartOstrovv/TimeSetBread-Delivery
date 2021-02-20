@@ -12,7 +12,10 @@ class Dish
 	map<string, float>m_SkladDish;
 	int m_PriceDish;
 public:
-    Dish(string name, map<string,float>sklad,int price){}//todo
+	Dish(string name, map<string, float>sklad, int price)
+	{
+
+	}
 	int getPrice() { return m_PriceDish; }
 	string getName() { return m_NameDish; }
 	string getAbout() { return m_AboutDish;}
