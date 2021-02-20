@@ -14,7 +14,6 @@ class Dish
 public:
 	Dish(string name, map<string, float>sklad, int price)
 	{
-
 	}
 	int getPrice() { return m_PriceDish; }
 	string getName() { return m_NameDish; }
@@ -23,7 +22,7 @@ public:
 	{
 		cout << "Dish: " << m_NameDish << " - " << m_AboutDish << "!" << endl;
 		cout << "Price: " << m_PriceDish << endl;
-		if (!withoutSklad)
+		if (!withoutSklad)///
 		{
 			cout << "=======Sklad========\n";
 			for_each(m_SkladDish.begin(), m_SkladDish.end(), 
