@@ -3,6 +3,7 @@
 *.db
 *.ipch
 vs/proekt/v16/
+x64/
 # Compiled Object files
 *.slo
 *.lo
