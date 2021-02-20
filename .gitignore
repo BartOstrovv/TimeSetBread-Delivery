@@ -2,6 +2,7 @@
 *.d
 *.db
 *.ipch
+vs/proekt/v16/
 # Compiled Object files
 *.slo
 *.lo
