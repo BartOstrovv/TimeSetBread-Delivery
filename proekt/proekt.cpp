@@ -5,88 +5,72 @@
 #include <map>
 #include <algorithm>
 using namespace std;
-class Dish
+
+struct Dish
 {
-	string m_NameDish;
-	string m_AboutDish;
-	map<string, float>m_SkladDish;
-	int m_PriceDish;
-public:
-	Dish(string name,string about, map<string, float>sklad, int price):
-		m_NameDish(name), m_AboutDish(about),m_SkladDish(sklad),m_PriceDish(price){}
-	int getPrice() { return m_PriceDish; }
-	string getName() { return m_NameDish; }
-	string getAbout() { return m_AboutDish;}
-	void Show(bool withoutSklad = true)
+	string m_Name;
+	string m_Weight;
+	string m_Price;
+	int count = 1;
+	Dish(string n, string w, string p) :m_Name(n), m_Weight(w), m_Price(p) {};
+	void Show()
 	{
-		cout << "Dish: " << m_NameDish << " - " << m_AboutDish << "!" << endl;
-		cout << "Price: " << m_PriceDish << endl;
-		if (withoutSklad)
-		{
-			cout << "=======Sklad========\n";
-			cout << "Stepan" << endl;
-			for_each(m_SkladDish.begin(), m_SkladDish.end(), 
-				[&](pair<string, float>p) {cout << p.first << " = " << p.second << " gram\n"; });
-		}
+		cout << "Name: " << m_Name << endl;
+		cout << "Weight: " << m_Weight << endl;
+		cout << "Price: " << m_Price << endl;
+		cout << "==============\n";
 	}
-	
 };
 class Restoran
 {
-protected:
-	string m_NameRestoran;
-	string m_Street;
 	vector<Dish>m_Menu;
-	int m_OpenTime;
-	int m_CloseTime;
-};
-class Person :public Restoran
-{
-protected:
-	string m_Name;
-	int m_Age;
-	string m_Sex;
+	string m_NameRest;
+	string m_StreetRest;
+	string m_RaitRest;
 public:
-	virtual void EditOrBuy(string) = 0;
-	virtual void DelOfMenu_or_DelOfBasket() = 0;
-	virtual void ShowInfoOfTime_or_setInfoTime() = 0;
-};
-class Admin: public Person
-{
-	string m_password;
-public:
-	void EditOrBuy(string nameOrder) override
+	Restoran(){}
+	Restoran(vector<Dish> v, string name, string street, string rait) :
+		m_NameRest(name), m_StreetRest(street), m_RaitRest(rait), m_Menu(v) {}
+	void ShowInfoRest()
 	{
-		for(auto &i :m_Menu)
-			if (i.getName()==nameOrder)
-			{
-				//setName
-				//setAbout
-				//setSklad ....
-			}
+		cout << "Name restoran: " << m_NameRest << endl;
+		cout << "Street: " << m_StreetRest << endl;
+		cout << "Raiting: " << m_RaitRest << endl;
+		cout << "=======MENU=======" << endl;
+		for (auto& i : m_Menu) i.Show();
+		cout << endl;
 	}
 };
-class User : public Person
+class Basket
 {
-	vector<Dish>Basket;
-	string m_street;
-	int m_MaxCash;
+	vector<Dish> PokypkaBlya;
+	int countElement;
 public:
-	void EditOrBuy(string nameOrder) override
+	void AddElement(Dish obj) { PokypkaBlya.push_back(obj); countElement++; }
+	void DelElement(int name) 
+	{ 
+		PokypkaBlya.erase(PokypkaBlya.begin() + name-1);
+	 countElement--;
+	}
+	void ShowBasket()
 	{
-		for (auto &i : m_Menu)
-			if (i.getName() == nameOrder)
-			{
-				Basket.push_back(i);
-			}
-		///////todo
+		cout << "===================In basket===========\n";
+		for (auto &i : PokypkaBlya) i.Show();
+		cout << "\t";
 	}
 };
-int main(int argc, char* argv[])
+
+
+int main()
 {
-	Dish cez("Cezar", "Ahyennuy salat", map<string, float>{make_pair("Povmidor", 0.25),make_pair("Orgirok", 0.5)},100);
-	cout << "hello" << endl;
-	cez.Show();
-	cout << "Step" << endl;
-	cout << "Bohdan Added this" << endl;
+
+	Basket bas;
+	bas.AddElement(Dish("salat", "122", "113"));
+	Restoran buk(vector<Dish>{Dish("salawwt", "122", "113"), Dish("salat", "122", "113"), Dish("salat", "122", "113")},"Restik","Brodrr","13,6");
+	Restoran buk2(vector<Dish>{Dish("sawlat", "122", "113"), Dish("salat", "122", "113"), Dish("salat", "122", "113")}, "Restik", "Brodrr", "13,6");
+	Restoran buk3(vector<Dish>{Dish("swddwalat", "122", "113"), Dish("salat", "122", "113"), Dish("salat", "122", "113")}, "aaaaaaaastik", "Baaarr", "13,6");
+	vector<Restoran> r{ buk,buk2,buk3 };
+	for (auto& i : r)
+		i.ShowInfoRest();
+
 }
