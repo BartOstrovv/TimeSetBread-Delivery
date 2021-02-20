@@ -8,6 +8,6 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty2=float
           ]
-D:\My_Project\final_project_cpp\TimeSetBread-Delivery\proekt\proekt.cpp(86): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<const std::string,float>::pair<const char*,double,0>(std::pair<const char *,double> &&) noexcept(false)"
-D:\My_Project\final_project_cpp\TimeSetBread-Delivery\proekt\proekt.cpp(86): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<const std::string,float>::pair<const char*,double,0>(std::pair<const char *,double> &&) noexcept(false)"
-  proekt.vcxproj -> D:\My_Project\final_project_cpp\TimeSetBread-Delivery\x64\Debug\proekt.exe
+J:\project\TimeSetBread-Delivery\proekt\proekt.cpp(87): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<const std::string,float>::pair<const char*,double,0>(std::pair<const char *,double> &&) noexcept(false)"
+J:\project\TimeSetBread-Delivery\proekt\proekt.cpp(87): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<const std::string,float>::pair<const char*,double,0>(std::pair<const char *,double> &&) noexcept(false)"
+  proekt.vcxproj -> J:\project\TimeSetBread-Delivery\x64\Debug\proekt.exe
