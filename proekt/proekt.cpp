@@ -13,16 +13,19 @@ struct Dish
 	string m_Weight;
 	string m_Price;
 	int m_numberOfDish;
+	int m_id = 0;
+
 	Dish() {}
 	Dish(string n, string w, string p) :m_Name(n), m_Weight(w), m_Price(p) {}
 	void Show()
 	{
-		cout << "Name: " <<m_Name << " -- " << m_About << endl;
-		cout << "Weight: " << m_Weight << endl;
-		cout << "Price: " << m_Price << endl;
-		
+		cout << "ID: " << m_id << endl <<
+			"Name: " << m_Name << " -- " << m_About << endl <<
+			"Weight: " << m_Weight << endl <<
+			"Price: " << m_Price << endl;
 	}
 };
+
 class Restoran
 {
 	vector<Dish>m_Menu;
@@ -45,6 +48,7 @@ public:
 				getline(inFile, temp.m_About);
 				getline(inFile, temp.m_Weight);
 				getline(inFile, temp.m_Price);
+				temp.m_id = m_Menu.size() + 1;
 				m_Menu.push_back(temp);
 		   }
 		}
@@ -56,7 +60,8 @@ public:
 	
 	Dish getDish(int number)
 	{
-		return m_Menu[number-1];
+		if(number <= m_Menu.size())		//TODO
+			return m_Menu[number-1];
 	}
 
 	void ShowInfoRest()
@@ -69,25 +74,35 @@ public:
 		cout << endl;
 	}
 };
+
 class Basket
 {
 	vector<Dish> m_buy;
+	int nSum = 0;
 public:
 	void AddElement(Dish obj, int nNumber = 1) 
 	{ 
 		obj.m_numberOfDish = nNumber;
+		obj.m_id = m_buy.size() + 1;
 		m_buy.push_back(obj);
 	}
+
 	void DelElement(int name) 
 	{ 
-		m_buy.erase(m_buy.begin() + name-1);
+		auto it = find_if(m_buy.begin(), m_buy.end(), [=](Dish obj) 
+			{
+				return obj.m_id == name;
+			});
+
+		nSum -= (stoi(it->m_Price) * it->m_numberOfDish);	
+		m_buy.erase(it);
 	}
+
 	void ShowBasket()
 	{
-		int nSum = 0;
+		nSum = 0;
 		cout << "===================In basket===========\n";
 		cout << cout.width(30) << m_buy.size() << " Element" << endl;
-
 		for (auto& i : m_buy)
 		{
 			i.Show();
@@ -98,11 +113,11 @@ public:
 		cout << "Total: " << nSum << endl;
 	}
 
-	void addNumber(string name, int number)
+	void setNumber(int id, int number)
 	{
-		auto it = find_if(m_buy.begin(), m_buy.end(), [=](Dish obj)->bool
+		auto it = find_if(m_buy.begin(), m_buy.end(), [=](Dish obj)->bool	// TODO
 			{
-				return obj.m_Name == name;
+				return obj.m_id == id;
 			});
 		it->m_numberOfDish = number;
 	}
@@ -112,12 +127,14 @@ public:
 		ofstream outFile(namefile, ofstream::out);
 		try
 		{
-			if (!outFile.is_open()) throw 0;
+			if (!outFile.is_open()) 
+				throw 0;
 			for_each(m_buy.begin(), m_buy.end(),
 				[&](Dish vd) {
 					outFile << "Name: " << vd.m_Name << " | ";
 					outFile << "Price: " << vd.m_Price << endl;
 				});
+			outFile << "Total price: " << nSum << endl;
 		}
 		catch (exception& ex)
 		{
@@ -126,7 +143,6 @@ public:
 		outFile.close();
 	}
 };
-
 
 int main()
 {
@@ -138,8 +154,12 @@ int main()
 	bas.AddElement(Dish("Cesar", "12", "200"));
 	bas.AddElement(Dish("Shuba", "122", "113"));
 	bas.AddElement(Dish("Olive", "122", "113"));
-	bas.AddElement(buk.getDish(2),2);
+	bas.AddElement(buk.getDish(3),2);
 	bas.ShowBasket();
-	bas.SaveCheck("testSaveCheck.txt");
+	cout << "=============del=========" << endl;
+	bas.setNumber(5, 4);
+	bas.DelElement(2);
+	bas.ShowBasket();
+	//bas.SaveCheck("testSaveCheck.txt");
 
 }

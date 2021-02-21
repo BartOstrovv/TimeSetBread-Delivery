@@ -2,4 +2,5 @@ Name: Cesar | Price: 113
 Name: Cesar | Price: 200
 Name: Shuba | Price: 113
 Name: Olive | Price: 113
-Name: Shashlyk | Price: 304
+Name: Gruboviy sup | Price: 2000
+Total price: 4539
