@@ -73,6 +73,23 @@ public:
 		for (auto& i : m_Menu) i.Show();
 		cout << endl;
 	}
+
+	void ShowMenu()
+	{
+		cout << "=======MENU=======" << endl; // added
+		for (auto& i : m_Menu) i.Show();
+		cout << endl;
+	}
+
+	string getName()
+	{
+		return m_NameRest; // added
+	}
+
+	string getRating()
+	{
+		return m_RaitRest; // added
+	}
 };
 
 class Basket
@@ -146,7 +163,7 @@ public:
 
 int main()
 {
-	Restoran buk("Pobeda", "Stysa 2", "9/10", "LoadMenuToRestoran.txt");
+	/*Restoran buk("Pobeda", "Stysa 2", "9/10", "LoadMenuToRestoran.txt");
 	buk.ShowInfoRest();
 
 	Basket bas;
@@ -159,7 +176,124 @@ int main()
 	cout << "=============del=========" << endl;
 	bas.setNumber(5, 4);
 	bas.DelElement(2);
-	bas.ShowBasket();
+	bas.ShowBasket();*/
 	//bas.SaveCheck("testSaveCheck.txt");
+	Restoran buk("Pobeda", "Stysa 2", "9/10", "LoadMenuToRestoran.txt");
+	Restoran buk1("sdgdsg", "Stysa 2", "6/10", "LoadMenuToRestoran.txt");
+	Restoran buk2("ybuyhdfhgdl", "Stysa 2", "7/10", "LoadMenuToRestoran.txt");
+	Restoran buk3("jkasdogf", "Stysa 2", "3/10", "LoadMenuToRestoran.txt");
+	vector<Restoran> rest = {buk,buk1 ,buk2 ,buk3 };
+	Basket bas;
+	bool work = true;
+	while (work)
+	{
+		int choice = 0;
+		cout << "1 - Show restaurants." << endl;
+		cout << "2 - Search by restaurant name." << endl;
+		cout << "3 - Search by restaurant rating." << endl;
+		cout << "4 - Go to basket." << endl;
+		cout << "5 - Exit." << endl;
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+		{
+			int count = 1;
+			cout << "Restaurant list:" << endl;
+			for (auto i : rest)
+			{
+				cout << count << ": ";
+				cout << i.getName() << endl;
+				count++;
+			}
+			count = 0;
+			cout << "Type number of restaurant to see menu, type 0 to go back " << endl;
+			cin >> count;
+			if (count == 0)
+			{
+				continue;
+			}
+			else
+			{
+				rest[count].ShowMenu();
+				int dish = 0;
+				int YorN = 0;
+				bool addDish = true;
+				cout << "Dou you want to add dish to basket? " << endl;
+				cout << "1 - Yes, 2 - No" << endl;
+				cin >> YorN;
+				if (YorN == 1)
+				{
+					cout << "Add dish to basket: ";
+					cin >> dish;
+					bas.AddElement(rest[count].getDish(dish), 1);
+					while (addDish)
+					{
+						cout << "Dou you want to add another dish from that restaurant?" << endl;
+						cout << "1 - Yes, 2 - No" << endl;
+						cin >> YorN;
+						if (YorN == 1)
+						{
+							dish = 0;
+							cout << "Add dish to basket: ";
+							cin >> dish;
+							bas.AddElement(rest[count].getDish(dish), 1);
+						}
+						else
+						{
+							addDish = false;
+						}
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+		}break;
+		case 2:
+		{
+			cin.ignore();
+			string name;
+			cout << "Type name of the restaurant to search: " << endl;
+			getline(cin, name);
+			int Num = 1;
+			for (auto i : rest)
+			{
+				if (i.getName() == name)
+				{
+					cout << "There is restaurant with name \"" << name << "\", it`s number is: " << Num << endl;
+				}
+				Num++;
+			}
+		}break;
+		case 3:
+		{
 
+		}break;
+		case 4:
+		{
+			int choice = 0;
+			cout << "Show basket?" << endl << "1 - Yes, 2 - No" << endl;
+			cin >> choice;
+			if (choice == 1)
+			{
+				bas.ShowBasket();
+
+			}
+			else
+			{
+				break;
+			}
+		}break;
+		case 5:
+		{
+			work = false;
+		}break;
+		default:
+		{
+			cout << "Wrong input!" << endl;
+		}
+		}
+	}
 }
