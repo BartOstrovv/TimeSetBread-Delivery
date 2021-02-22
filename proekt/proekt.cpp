@@ -177,9 +177,10 @@ void SaveCheck(string file, string n, string p, string s, string t)
 class Admin : public Restoran
 {
 	bool ok = false;
-	vector <pair<string, string>> m_adm;
+	vector<Restoran> m_restorans;
+	vector <pair<string, string>> m_admPass;
 public:
-	Admin(Restoran rest) :Restoran(rest)
+	Admin(vector<Restoran> restorans):m_restorans(restorans)
 	{
 		ifstream aFile("passwords.txt");
 		try
@@ -191,7 +192,7 @@ public:
 				getline(aFile, f, '|');
 
 				getline(aFile, s, '|');
-				m_adm.push_back(make_pair(f,s));
+				m_admPass.push_back(make_pair(f,s));
 			}
 		}
 		catch (exception& ex)
@@ -200,6 +201,7 @@ public:
 		}
 		aFile.close();
 	}
+	vector<Restoran>& getVectorRest() { return m_restorans; }
      bool Avtorization()
 	{
 
@@ -208,7 +210,7 @@ public:
 			 string s, p;
 			 cout << "Enter the name: "; cin >> s;
 			 cout << "Enter the password: "; cin >> p;
-			 for (auto& i : m_adm)
+			 for (auto& i : m_admPass)
 				 if (i.first == s) (i.second == p) ? ok = true : ok = false;
 			 if (ok) cout << "Hello, admin "<< s << endl;
 			 else cout << "Incorrect name or password. Try again!" << endl;
@@ -270,9 +272,9 @@ public:
 int main()
 {
 	
-	vector<Admin> rest
-	{ Restoran("Shalash", "Ternopil","7/10","LoadMenuToRestoran.txt"), Restoran("Kabak","Lviv","8/10","LoadMenuToRestoran2.txt"), 
-		Restoran("Elita", "Kiev","9/10","LoadMenuToRestoran3.txt") };
+	Admin adm{
+	vector<Restoran>{ Restoran("Shalash", "Ternopil","7/10","LoadMenuToRestoran.txt"), Restoran("Kabak","Lviv","8/10","LoadMenuToRestoran2.txt"),
+		Restoran("Elita", "Kiev","9/10","LoadMenuToRestoran3.txt") } };
 	Basket bas;
 	bool avtorization = false;
 	bool work = true;
@@ -291,13 +293,13 @@ int main()
 		{
 		case 0:
 		{
-			rest[0].Avtorization(); avtorization = true; break;
+			adm.Avtorization(); avtorization = true; break;
 		}
 		case 1:
 		{
 			int count = 1;
 			cout << "Restaurant list:" << endl;
-			for (auto i : rest)
+			for (auto &i : adm.getVectorRest())
 			{
 				cout << count << ": ";
 				cout << i.getName() << endl;
@@ -312,7 +314,7 @@ int main()
 			}
 			else
 			{
-				rest[count-1].ShowMenu();
+				adm.getVectorRest()[count-1].ShowMenu();
 				int dish = 0;
 				int YorN = 0;
 				bool addDish = true;
@@ -325,8 +327,9 @@ int main()
 					cin >> dish;
 					cout << "How match?" << endl;
 					cin >> YorN;
-
-					bas.AddElement(rest[count-1].getDish(dish-1), YorN);
+					
+					bas.AddElement(adm.getVectorRest()[count-1].getDish(dish-1), YorN);
+					bas.getDish(YorN).m_NameRest = adm.getVectorRest()[count - 1].getName();
 					while (addDish)
 					{
 						cout << "Dou you want to add another dish from that restaurant?" << endl;
@@ -339,9 +342,8 @@ int main()
 							cin >> dish;
 							cout << "How match?" << endl;
 							cin >> YorN;
-							bas.getDish(YorN).m_NameRest = rest[count - 1].getName();
-							bas.AddElement(rest[count-1].getDish(dish-1), YorN);
-							
+							bas.AddElement(adm.getVectorRest()[count-1].getDish(dish-1), YorN);
+							bas.getDish(YorN).m_NameRest = adm.getVectorRest()[count - 1].getName();
 						}
 						else
 						{
@@ -362,7 +364,7 @@ int main()
 			cout << "Type name of the restaurant to search: " << endl;
 			getline(cin, name);
 			int Num = 1;
-			for (auto i : rest)
+			for (auto i : adm.getVectorRest())
 			{
 				if (i.getName() == name)
 				{

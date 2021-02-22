@@ -1,8 +1,7 @@
-Name user: Taras
-Telephone: ddeftre
-Street: 039494
-Time: 443
-Name: Cesar x2---rest:  | Price: 240
-Name: Filadelphia z vugroom x3---rest:  | Price: 600
-Name: Sup uha x3---rest:  | Price: 600
-Total price: 1448
+Name user: ttt
+Telephone: ttt
+Street: tttt
+Time: tt
+Name: Shashlyk x2---rest: Kabak | Price: 608
+Name: Filadelphia z kopchenum lososem x2---rest:  | Price: 608
+Total price: 1216
