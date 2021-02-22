@@ -13,7 +13,7 @@ struct Dish
 	string m_About;
 	string m_Weight;
 	string m_Price;
-
+	string m_NameRest;
 	Dish() {}
 	Dish(string n, string about, string w, string p) :m_Name(n), m_Weight(w), m_Price(p), m_About(about) {}
 	void Show()
@@ -62,8 +62,11 @@ public:
 	
 	Dish getDish(int number)
 	{
-		if(number <= m_Menu.size())		//TODO
-			return m_Menu[number-1];
+		for (auto& i : m_Menu)
+		{
+			if (i.first == number)
+				return i.second;
+		}
 	}
 
 	void ShowInfoRest()
@@ -100,10 +103,14 @@ protected:
  multimap<int,Dish> m_buy;
 	int nSum = 0;
 public:
+	Dish& getDish(int n)
+	{
+		return m_buy.find(n)->second;
+	}
 	void AddElement(Dish obj, int countDish) 
 	{ 
 		m_buy.emplace(countDish, obj);
-		nSum += stoi(obj.m_Price);
+		nSum += (stoi(obj.m_Price) * countDish);
 	}
 
 	void DelElement(int name) 
@@ -123,11 +130,37 @@ public:
 	
 		for_each(m_buy.begin(), m_buy.end(), [&](pair<int, Dish>p)
 			{
-				cout << "Dish: " << p.second.m_Name << " x" << p.first;
+				cout << "Dish: " << p.second.m_Name << " x" << p.first << endl;
 				nSum += p.first;
 			});
-		cout << "Total: " << nSum << endl;
+		cout << "\nTotal: " << nSum << endl;
+	
+}
+void SaveCheck(string file, string n, string p, string s, string t)
+{
+	ofstream outFile(file, ofstream::out);
+	try
+	{
+		if (!outFile.is_open())
+			throw 0;
+		outFile << "Name user: " << n << endl;
+		outFile << "Telephone: " << p << endl;
+		outFile << "Street: " << s << endl;
+		outFile << "Time: " << t << endl;
+		for_each(m_buy.begin(), m_buy.end(),
+			[&](pair<int, Dish> vd) {
+				outFile << "Name: " << vd.second.m_Name << " x"<<vd.first<< "---rest: "<< vd.second.m_NameRest <<" | ";
+				outFile << "Price: " << stoi(vd.second.m_Price)*vd.first << endl;
+			});
+		outFile << "Total price: " << nSum << endl;
 	}
+	catch (exception & ex)
+	{
+		cout << "Error: " << ex.what() << endl;
+	}
+
+	outFile.close();
+}
 
 	//void setNumber(int id, int number)
 	//{
@@ -138,64 +171,9 @@ public:
 	//	it->m_numberOfDish = number;
 	//}
 
-	bool SaveCheck(string namefile)
-	{
-		ofstream outFile(namefile, ofstream::out|ofstream::app);
-		try
-		{
-			if (!outFile.is_open()) 
-				throw 0;
-			for_each(m_buy.begin(), m_buy.end(),
-				[&](pair<int,Dish> vd) {
-					outFile << "Name: " << vd.second.m_Name << " | ";
-					outFile << "Price: " << vd.second.m_Price << endl;
-				});
-			outFile << "Total price: " << nSum << endl;
-			return true;
-		}
-		catch (exception& ex)
-		{
-			cout << "Error: " << ex.what() << endl;
-			return false;
-		}
-		outFile.close();
-	}
+	
 };
-class User : public Basket
-{
-	Basket m_bas;
-	string m_Name;
-	string m_numberPhone;
-	string m_Street;
-	string m_time;
-public:
-	User(Basket& bas) :m_bas(bas) {};
-	User(string name, string number, string street,  string time):m_Name(name),m_numberPhone(number)
-	,m_Street(street),m_time(time){}
-	void setInfoUser(string n, string nom, string stret, string time)
-	{
-		m_Name = n; m_numberPhone = nom; m_Street = stret; m_time = time;
-	}
-	void Check(string file)
-	{
-		ofstream outFile(file, ofstream::out | ofstream::app);
-		try
-		{
-			if (!outFile.is_open())
-				throw 0;
-			outFile << "Name user: " << m_Name << endl;
-			outFile << "Telephone: " << m_numberPhone << endl;
-			outFile << "Street: " << m_Street << endl;
-			outFile << "Time: " << m_time << endl;
-			m_bas.SaveCheck(file);
-		}
-		catch (exception& ex)
-		{
-			cout << "Error: " << ex.what() << endl;
-		}
-		outFile.close();
-	}
-};
+
 class Admin : public Restoran
 {
 	bool ok = false;
@@ -232,7 +210,7 @@ public:
 			 cout << "Enter the password: "; cin >> p;
 			 for (auto& i : m_adm)
 				 if (i.first == s) (i.second == p) ? ok = true : ok = false;
-			 if (ok) cout << "Hello, admin of " << m_NameRest << " - " << s << endl;
+			 if (ok) cout << "Hello, admin "<< s << endl;
 			 else cout << "Incorrect name or password. Try again!" << endl;
 			 Avtorization();
 		 }
@@ -261,7 +239,7 @@ public:
 
 					case '2': i.second.m_About = change; break;
 					case '3':i.second.m_Weight = change; break;
-					case '4':i.second.m_Weight = change; break;
+					case '4':i.second.m_Price = change; break;
 					default: cout << "incorrect choose" << endl;
 					}
 				}
@@ -292,35 +270,17 @@ public:
 int main()
 {
 	
-	Admin Taras(Restoran("Shalash", "Ternopil", "7/10", "LoadMenuToRestoran.txt"));
-	cout << endl;
-	Taras.CreateNewDish("Burgeros", "Yalovychyna", "300 gramm", "120 grn");
-	Taras.EditTheDish(1);
-	Taras.ShowInfoRest();
-	
-
+	vector<Admin> rest
+	{ Restoran("Shalash", "Ternopil","7/10","LoadMenuToRestoran.txt"), Restoran("Kabak","Lviv","8/10","LoadMenuToRestoran2.txt"), 
+		Restoran("Elita", "Kiev","9/10","LoadMenuToRestoran3.txt") };
 	Basket bas;
-	bas.AddElement(Dish("Cesar","wdwa", "122", "113"),2);
-	bas.AddElement(Dish("Cesar","wawdawd", "12", "200"),4);
-	bas.AddElement(Dish("Shuba","aaaaaaaaaaa", "122", "113"),5);
-	bas.AddElement(Dish("Olive","vvvvvvvv", "122", "113"),2);
-	User us(bas);
-	us.setInfoUser("Jhon","037281930", "Stysa","14:45");
-	us.Check("testSaveCheck.txt");
-	
-	//bas.SaveCheck("testSaveCheck.txt");
-	/*Restoran buk("Pobeda", "Stysa 2", "9/10", "LoadMenuToRestoran.txt");
-	Restoran buk1("sdgdsg", "Stysa 2", "6/10", "LoadMenuToRestoran.txt");
-	Restoran buk2("ybuyhdfhgdl", "Stysa 2", "7/10", "LoadMenuToRestoran.txt");
-	Restoran buk3("jkasdogf", "Stysa 2", "3/10", "LoadMenuToRestoran.txt");
-	vector<Restoran> rest = {buk,buk1 ,buk2 ,buk3 };
-	Basket bas;
-	
+	bool avtorization = false;
 	bool work = true;
 	while (work)
 	{
-		int choice = 0;
-
+		int choice;
+		if (!avtorization)
+		cout << "0 - Avtorization to Admin" << endl;
 		cout << "1 - Show restaurants." << endl;
 		cout << "2 - Search by restaurant name." << endl;
 		cout << "3 - Search by restaurant rating." << endl;
@@ -329,6 +289,10 @@ int main()
 		cin >> choice;
 		switch (choice)
 		{
+		case 0:
+		{
+			rest[0].Avtorization(); avtorization = true; break;
+		}
 		case 1:
 		{
 			int count = 1;
@@ -348,7 +312,7 @@ int main()
 			}
 			else
 			{
-				rest[count].ShowMenu();
+				rest[count-1].ShowMenu();
 				int dish = 0;
 				int YorN = 0;
 				bool addDish = true;
@@ -359,7 +323,10 @@ int main()
 				{
 					cout << "Add dish to basket: ";
 					cin >> dish;
-					bas.AddElement(rest[count].getDish(dish), 1);
+					cout << "How match?" << endl;
+					cin >> YorN;
+
+					bas.AddElement(rest[count-1].getDish(dish-1), YorN);
 					while (addDish)
 					{
 						cout << "Dou you want to add another dish from that restaurant?" << endl;
@@ -370,7 +337,11 @@ int main()
 							dish = 0;
 							cout << "Add dish to basket: ";
 							cin >> dish;
-							bas.AddElement(rest[count].getDish(dish), 1);
+							cout << "How match?" << endl;
+							cin >> YorN;
+							bas.getDish(YorN).m_NameRest = rest[count - 1].getName();
+							bas.AddElement(rest[count-1].getDish(dish-1), YorN);
+							
 						}
 						else
 						{
@@ -407,16 +378,27 @@ int main()
 		case 4:
 		{
 			int choice = 0;
-			cout << "Show basket?" << endl << "1 - Yes, 2 - No" << endl;
+			cout << "Show basket? - 1, SaveCheck - 2, Del dish in Basket - 3" << endl;
 			cin >> choice;
 			if (choice == 1)
+			bas.ShowBasket();
+			if (choice == 3)
 			{
-				bas.ShowBasket();
-
+				int del;
+				cout << "Enter the position to del: ";
+				cin >> del;
+				bas.DelElement(del);
 			}
-			else
+			if (choice == 2)
 			{
-				break;
+				string name; string street; string number; string time;
+			
+				cout << "Enter your name: "; cin >> name;
+				cout << "Enter your number phone: "; cin >> number;
+				cout << "Enter your street: "; cin >> street;
+				cout << "Time: "; cin >> time;
+			
+				bas.SaveCheck("testSaveCheck.txt", name, street,number,time);
 			}
 		}break;
 		case 5:
@@ -428,5 +410,5 @@ int main()
 			cout << "Wrong input!" << endl;
 		}
 		}
-	}*/
+	}
 }

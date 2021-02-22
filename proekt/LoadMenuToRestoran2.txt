@@ -1,0 +1,12 @@
+Filadelphia z lososem
+Cheese filadelphia, avokado, losos'
+150
+150
+Filadelphia z kopchenum lososem
+Cheese filadelphia, avokado, kopchenuy losos'
+200
+304
+Filadelphia z vugroom
+Cheese filadelphia, avokado, vugor
+150
+200

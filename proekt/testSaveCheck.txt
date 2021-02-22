@@ -1,9 +1,8 @@
-Name user: Jhon
-Telephone: 037281930
-Street: Stysa
-Time: 14:45
-Name: Cesar | Price: 113
-Name: Olive | Price: 113
-Name: Cesar | Price: 200
-Name: Shuba | Price: 113
-Total price: 539
+Name user: Taras
+Telephone: ddeftre
+Street: 039494
+Time: 443
+Name: Cesar x2---rest:  | Price: 240
+Name: Filadelphia z vugroom x3---rest:  | Price: 600
+Name: Sup uha x3---rest:  | Price: 600
+Total price: 1448
