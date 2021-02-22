@@ -1,0 +1,71 @@
+Quattro formaggi
+Cream, pear, cheese: mozzarella, ricotta, chips, parmesan and walnuts.
+380
+129
+Parma
+Mozzarella and Parmesan cheeses, Parma ham, cream sauce, arugula.
+360
+126
+Salami
+Grated tomatoes, mozzarella, salami sausage
+370
+116
+Diabola
+Grated tomatoes, mozzarella, spicy salami, chili peppers.
+390
+99
+Prosciutto
+Grated tomatoes, mozzarella, ham.
+430
+94
+Caprichosa
+Grated tomatoes, mozzarella, ham, fresh mushrooms
+460
+99
+Chorizo
+Grated tomatoes, cured sausage, mozzarella and dorbly.
+370
+123
+Calzone
+Closed pizza with ham, mozzarella, ricotta, parmesan and tomatoes.
+360
+99
+Margherita
+Grated tomatoes, mozzarella, tomatoes.
+390
+86
+Al Salmone
+Salmon fillet, cream sauce, mozzarella, parmesan, capers, lemon, arugula and dill.
+400
+146
+Ranch
+Tender chicken, mozzarella, bacon, tomatoes, Ranch sauce.
+460
+124
+Carbonara
+Tomatoes, mozzarella, ham, Bavarian sausages and baked egg.
+440
+96
+Frutti di mare
+Grated tomatoes, mozzarella, seafood cocktail.
+460
+209
+Fetucini with mushrooms and ham
+With parmesan cheese and tender cream sauce.
+320
+94
+Carbonar spaghetti
+300
+93
+Shrimp pasta
+Served with branded cream sauce
+350
+158
+Meat lasagna
+With Parmesan cheese, Pesto sauce, arugula and tomatoes.
+310
+112
+Ravioli with mushrooms
+With Parmesan and mushroom sauce.
+240
+96
