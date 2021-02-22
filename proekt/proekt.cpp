@@ -14,12 +14,13 @@ struct Dish
 	string m_Weight;
 	string m_Price;
 	string m_NameRest;
+	int m_numberOfDish;
+
 	Dish() {}
 	Dish(string n, string about, string w, string p) :m_Name(n), m_Weight(w), m_Price(p), m_About(about) {}
 	void Show()
 	{
-		cout <<
-			"Name: " << m_Name << " -- " << m_About << endl <<
+		cout << "Name: " << m_Name << " -- " << m_About << endl <<
 			"Weight: " << m_Weight << endl <<
 			"Price: " << m_Price << endl;
 	}
@@ -71,18 +72,21 @@ public:
 
 	void ShowInfoRest()
 	{
-		cout << "Name restoran: " << m_NameRest << endl;
-		cout << "Street: " << m_StreetRest << endl;
-		cout << "Raiting: " << m_RaitRest << endl;
-		cout << "=======MENU=======" << endl;
-		for (auto& i : m_Menu) i.second.Show();
+		cout << "Name restoran: " << m_NameRest << endl << 
+			"Street: " << m_StreetRest << endl <<
+			"Raiting: " << m_RaitRest << endl;
+		ShowMenu();
 		cout << endl;
 	}
 
 	void ShowMenu()
 	{
 		cout << "=======MENU=======" << endl; // added
-		for (auto& i : m_Menu) i.second.Show();
+		for (auto& i : m_Menu)
+		{
+			cout << "ID: " << i.first + 1 << endl;	
+			i.second.Show();
+		}
 		cout << endl;
 	}
 
@@ -100,17 +104,21 @@ public:
 class Basket
 {
 protected:
- multimap<int,Dish> m_buy;
+	multimap<int,Dish> m_buy;
 	int nSum = 0;
+	int countDishOfBasket; 
 public:
+
 	Dish& getDish(int n)
 	{
 		return m_buy.find(n)->second;
 	}
-	void AddElement(Dish obj, int countDish) 
+
+	void AddElement(Dish obj, int countDish = 1) 
 	{ 
-		m_buy.emplace(countDish, obj);
-		nSum += (stoi(obj.m_Price) * countDish);
+		obj.m_numberOfDish = countDish;
+		m_buy.emplace(countDishOfBasket++, obj);
+		nSum += (stoi(obj.m_Price) * obj.m_numberOfDish);
 	}
 
 	void DelElement(int name) 
@@ -120,8 +128,13 @@ public:
 				return p.first == name;
 			});
 
-		nSum -= (it->first * stoi(it->second.m_Price));	
-		m_buy.erase(it);
+		if (it != m_buy.end())
+		{
+			nSum -= (it->first * stoi(it->second.m_Price));
+			m_buy.erase(it);
+		}
+		else
+			cout << "Dish not found" << endl;
 	}
 
 	void ShowBasket()
@@ -130,12 +143,11 @@ public:
 	
 		for_each(m_buy.begin(), m_buy.end(), [&](pair<int, Dish>p)
 			{
-				cout << "Dish: " << p.second.m_Name << " x" << p.first << endl;
-				nSum += p.first;
+				cout << "ID: " << p.first+1 << "\tDish: " << p.second.m_Name << "\nCost: " << p.second.m_Price << endl;
 			});
 		cout << "\nTotal: " << nSum << endl;
-	
-}
+	}
+
 void SaveCheck(string file, string n, string p, string s, string t)
 {
 	ofstream outFile(file, ofstream::out);
@@ -170,8 +182,6 @@ void SaveCheck(string file, string n, string p, string s, string t)
 	//		});
 	//	it->m_numberOfDish = number;
 	//}
-
-	
 };
 
 class Admin : public Restoran
@@ -263,8 +273,6 @@ public:
 					}
 		}
 	}
-
-	
 };
 
 int main()
@@ -325,7 +333,6 @@ int main()
 					cin >> dish;
 					cout << "How match?" << endl;
 					cin >> YorN;
-
 					bas.AddElement(rest[count-1].getDish(dish-1), YorN);
 					while (addDish)
 					{
@@ -339,7 +346,7 @@ int main()
 							cin >> dish;
 							cout << "How match?" << endl;
 							cin >> YorN;
-							bas.getDish(YorN).m_NameRest = rest[count - 1].getName();
+							//bas.getDish(YorN).m_NameRest = rest[count - 1].getName();
 							bas.AddElement(rest[count-1].getDish(dish-1), YorN);
 							
 						}
