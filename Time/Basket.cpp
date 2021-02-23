@@ -7,12 +7,27 @@ Dish& Basket::getDish(int n)
 
 void Basket::AddElement(Dish obj, int countDish)
 {
+	bool search = false;
 	if (countDish > 0)
 	{
-		obj.m_numberOfDish = countDish;
-		nSum += (stoi(obj.m_Price) * obj.m_numberOfDish);
-		m_buy.push_back(obj);
-		countDishOfBasket++;
+		for (auto &i : m_buy)
+		{
+			if (i.m_Name == obj.m_Name)
+			{
+				i.m_numberOfDish += countDish;
+				search = true;
+			}
+		}
+		if (search == false)
+		{
+			obj.m_numberOfDish = countDish;
+			m_buy.push_back(obj);
+			countDishOfBasket++;
+		}
+		for (auto i : m_buy)
+		{
+			nSum += (stoi(i.m_Price) * i.m_numberOfDish);
+		}
 	}
 }
 
@@ -35,7 +50,13 @@ void Basket::DelElement(int name, int quantity)
 		{
 			nSum += (stoi(i.m_Price) * i.m_numberOfDish); // тут напевно можна шось краще придумати, але вже 5-45 і я не соображаю і хочу хоть трохи поспати)
 		}
+		countDishOfBasket--;
 	}
+}
+
+int Basket::getCountOfBasket()
+{
+	return countDishOfBasket;
 }
 
 void Basket::ShowBasket()

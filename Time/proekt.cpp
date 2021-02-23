@@ -8,7 +8,6 @@ int main()
 	Basket bas;
 	bool avtorization = false;
 	bool work = true;
-	int baskInd = 1; // added
 	int quantity = 0;
 	int Num = 1;
 	int dish = 1;
@@ -61,7 +60,7 @@ int main()
 								cout << "How much you want to add?" << endl;
 								cin >> quantity;
 								bas.AddElement(adm.getVectorRest()[Num - 1].getDish(dish - 1), quantity);
-								bas.getDish(baskInd++).m_NameRest = adm.getVectorRest()[Num - 1].getName();
+								bas.getDish(bas.getCountOfBasket()).m_NameRest = adm.getVectorRest()[Num - 1].getName();
 							}
 						}
 
@@ -97,7 +96,7 @@ int main()
 								cout << "How much you want to add?" << endl;
 								cin >> quantity;
 								bas.AddElement(adm.getVectorRest()[Num].getDish(dish - 1), quantity);
-								bas.getDish(baskInd++).m_NameRest = adm.getVectorRest()[Num].getName();
+								bas.getDish(bas.getCountOfBasket()).m_NameRest = adm.getVectorRest()[Num].getName();
 							}
 						}
 					}
