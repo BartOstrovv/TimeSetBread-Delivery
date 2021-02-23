@@ -50,7 +50,7 @@ public:
 				getline(inFile, temp.m_About);
 				getline(inFile, temp.m_Weight);
 				getline(inFile, temp.m_Price);
-
+				temp.m_NameRest = m_NameRest;
 				m_Menu.emplace(countDishOfMenu++,temp);
 		   }
 		}
@@ -168,8 +168,10 @@ public:
 	{ 
 		if (name < countDishOfBasket)
 		{
-			//TODO
-	   }
+			m_buy.erase(m_buy.begin() + --name);
+			countDishOfBasket--;
+		}
+		else cout << "Error: don't have this element int Basket" << endl;
 	}
 
 	void ShowBasket()
@@ -260,11 +262,12 @@ int main()
 {
 	
 	Admin adm{
-	vector<Restoran>{ Restoran("Shalash", "Ternopil","7/10","LoadMenuToRestoran.txt"), Restoran("Kabak","Lviv","8/10","LoadMenuToRestoran2.txt"),
-		Restoran("Elita", "Kiev","9/10","LoadMenuToRestoran3.txt") } };
+	vector<Restoran>{ Restoran("Mama Italia", "Jivova 5","7/10","Mama_Italia.txt"), Restoran("Kozak","Lvivs'ka 2","8/10","Ukrainian_food.txt"),
+		Restoran("Yaposhka", "Kievska 9","9/10","Sushi.txt"), Restoran("Thai Life", "Brodivska 8", "6/10","Thai_life.txt") } };
 	Basket bas;
 	bool avtorization = false;
-	/*bool work = true;
+	
+	bool work = true;
 	while (work)
 	{
 		int choice;
@@ -315,9 +318,8 @@ int main()
 						cin >> dish;
 						cout << "How match?" << endl;
 						cin >> YorN;
-
 						bas.AddElement(adm.getVectorRest()[count - 1].getDish(dish - 1), YorN);
-						bas.getDish(YorN).m_NameRest = adm.getVectorRest()[count - 1].getName();
+						
 						while (addDish)
 						{
 							cout << "Dou you want to add another dish from that restaurant?" << endl;
@@ -331,7 +333,7 @@ int main()
 								cout << "How match?" << endl;
 								cin >> YorN;
 								bas.AddElement(adm.getVectorRest()[count - 1].getDish(dish - 1), YorN);
-								bas.getDish(YorN).m_NameRest = adm.getVectorRest()[count - 1].getName();
+								
 
 							}
 							else
@@ -436,5 +438,5 @@ int main()
 			adm.getVectorRest()[count-1].CreateNewDish(n,a,w,p);
 		}
  }
-	}*/
+	}
 }
