@@ -1,6 +1,0 @@
-Name user: f
-Telephone: f
-Street: f
-Time: f
-Name: Ravioli with mushrooms x5---Restaurant: Mama_Italia | Price: 480
-Total price: 480

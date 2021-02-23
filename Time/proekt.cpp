@@ -149,8 +149,8 @@ int main()
 						cout << "Enter your phone number: "; cin >> number;
 						cout << "Enter your street: "; cin >> street;
 						cout << "Time: "; cin >> time;
-
-						bas.SaveCheck("testSaveCheck.txt", name, street, number, time);
+						string nameToFile = "Orders\\Client_"+name + ".txt";
+						bas.SaveCheck(nameToFile, name, street, number, time);
 					}
 					else if (choice == 4)
 					{
@@ -196,6 +196,10 @@ int main()
 				cout << "Enter the number of dish to edit" << endl;
 				cin >> ind;
 				adm.getVectorRest()[Num - 1].EditTheDish(ind);
+				cout << "Save the change? 1 - Yes, 2 - NO: ";
+				ind = (char)_getche();
+				if (ind == '1') adm.getVectorRest()[Num - 1].SaveChangeMenu();
+				if (ind == '2') cout << "Change nor saved!" << endl;
 			}
 			else if (chang == '3')
 			{
@@ -206,6 +210,10 @@ int main()
 				cout << "Enter weigtht of the new Dish" << endl; cin >> w;
 				cout << "Enter price of the new Dish" << endl; cin >> p;
 				adm.getVectorRest()[Num - 1].CreateNewDish(n, a, w, p);
+				cout << "Save the change? 1 - Yes, 2 - NO: ";
+				int ind = (char)_getche();
+				if (ind == '1') adm.getVectorRest()[Num - 1].SaveChangeMenu();
+				if (ind == '2') cout << "Change nor saved!" << endl;
 			}
 			else if (chang == '4')
 			{
