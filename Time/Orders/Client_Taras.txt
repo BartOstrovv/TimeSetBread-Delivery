@@ -1,0 +1,7 @@
+Name user: Taras
+Telephone: Stysa
+Street: 39828
+Time: 16:00
+Name: Pad si Yu x2---Restaurant: Thai_life | Price: 224
+Name: Pizza Ranch x1---Restaurant: Mama_Italia | Price: 124
+Total price: 572

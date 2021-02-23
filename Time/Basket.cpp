@@ -78,8 +78,8 @@ void Basket::SaveCheck(string file, string n, string p, string s, string t)
 		if (!outFile.is_open())
 			throw 0;
 		outFile << "Name user: " << n << endl;
-		outFile << "Telephone: " << p << endl;
-		outFile << "Street: " << s << endl;
+		outFile << "Street: " << p << endl;
+		outFile << "Telephone: " << s << endl;
 		outFile << "Time: " << t << endl;
 		for_each(m_buy.begin(), m_buy.end(),
 			[&](Dish vd) {

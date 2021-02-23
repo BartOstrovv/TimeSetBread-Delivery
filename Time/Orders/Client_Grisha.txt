@@ -1,0 +1,7 @@
+Name user: Grisha
+Street: Banderu_6
+Telephone: 08371920402
+Time: 16:15
+Name: Pad Thai with chicken x2---Restaurant: Thai_life | Price: 262
+Name: Filadelphia unagi x2---Restaurant: Sushi | Price: 306
+Total price: 830
