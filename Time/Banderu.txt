@@ -1,7 +1,0 @@
-Name user: Taras
-Telephone: Banderu
-Street: 068039293
-Time: 83
-Name: Chicken in ginger sauce x2---Restaurant: Thai_life | Price: 262
-Name: Kapa maki x3---Restaurant: Sushi | Price: 129
-Total price: 391

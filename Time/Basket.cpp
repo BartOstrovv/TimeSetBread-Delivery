@@ -48,7 +48,7 @@ void Basket::DelElement(int name, int quantity)
 		nSum = 0;
 		for (auto i : m_buy)
 		{
-			nSum += (stoi(i.m_Price) * i.m_numberOfDish); // тут напевно можна шось краще придумати, але вже 5-45 і я не соображаю і хочу хоть трохи поспати)
+			nSum += (stoi(i.m_Price) * i.m_numberOfDish); // тут напевно можна шось краще придумати, але вже 5-45 і я не соображаю і хочу хоть трохи поспати) 
 		}
 		countDishOfBasket--;
 	}
