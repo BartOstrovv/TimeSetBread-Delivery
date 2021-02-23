@@ -34,10 +34,11 @@ protected:
 	string m_StreetRest;
 	string m_RaitRest;
 	int countDishOfMenu;
+	string m_fileName;
 public:
 	Restoran() {}
 	Restoran(string name, string street, string rait, string namefileMenu) :
-		m_NameRest(name), m_StreetRest(street), m_RaitRest(rait), countDishOfMenu(0)
+		m_NameRest(name), m_StreetRest(street), m_RaitRest(rait), countDishOfMenu(0),m_fileName(namefileMenu)
 	{
 		ifstream inFile(namefileMenu, ifstream::in);
 		Dish temp;
@@ -50,7 +51,7 @@ public:
 				getline(inFile, temp.m_About);
 				getline(inFile, temp.m_Weight);
 				getline(inFile, temp.m_Price);
-
+				temp.m_NameRest = m_NameRest;
 				m_Menu.emplace(countDishOfMenu++, temp);
 			}
 		}
@@ -78,7 +79,26 @@ public:
 		ShowMenu();
 		cout << endl;
 	}
+	void SaveChangeMenu()
+	{
+		ofstream file(m_fileName, ofstream::out);
+		if (!file.is_open())
+		{
+			cout << "File is not open!" << endl;
+		}
+		else
+		{
+			for_each(m_Menu.begin(), m_Menu.end(), [&](pair<int, Dish>p)
+				{
+					file << p.second.m_Name << endl;
+					file << p.second.m_About << endl;
+					file << p.second.m_Weight << endl;
+					file << p.second.m_Price << endl;
+				});
+			file.close();
+		}
 
+	}
 	void ShowMenu()
 	{
 		cout << "=======MENU=======" << endl;
@@ -170,7 +190,8 @@ public:
 	{
 		if (name < countDishOfBasket)
 		{
-			//TODO
+			m_buy.erase(m_buy.begin() + --name);
+			nSum += (stoi(m_buy[name].m_Price) * m_buy[name].m_numberOfDish);
 		}
 	}
 
@@ -212,7 +233,7 @@ public:
 	}
 };
 
-class Admin : public Restoran
+class Admin 
 {
 	bool ok = false;
 	vector<Restoran> m_restorans;
@@ -266,7 +287,7 @@ int main()
 		Restoran("Sushi", "Kiev","9/10","Sushi.txt"), Restoran("Ukrainian_food", "Kiev","9/10","Ukrainian_food.txt") } };
 	Basket bas;
 	bool avtorization = false;
-	bool work = true;
+	/*bool work = true;
 	while (work)
 	{
 		int choice;
@@ -319,7 +340,6 @@ int main()
 						cin >> YorN;
 
 						bas.AddElement(adm.getVectorRest()[count - 1].getDish(dish - 1), YorN);
-						bas.getDish(YorN).m_NameRest = adm.getVectorRest()[count - 1].getName();
 						while (addDish)
 						{
 							cout << "Dou you want to add another dish from that restaurant?" << endl;
@@ -333,7 +353,7 @@ int main()
 								cout << "How match?" << endl;
 								cin >> YorN;
 								bas.AddElement(adm.getVectorRest()[count - 1].getDish(dish - 1), YorN);
-								bas.getDish(YorN).m_NameRest = adm.getVectorRest()[count - 1].getName();
+							
 
 							}
 							else
@@ -439,5 +459,5 @@ int main()
 				adm.getVectorRest()[count - 1].CreateNewDish(n, a, w, p);
 			}
 		}
-	}
+	}*/
 }
