@@ -1,7 +1,7 @@
-Name user: ttt
-Telephone: ttt
-Street: tttt
-Time: tt
-Name: Shashlyk x2---rest: Kabak | Price: 608
-Name: Filadelphia z kopchenum lososem x2---rest:  | Price: 608
-Total price: 1216
+Name user: Wfwfa
+Telephone: awfaf
+Street: wafwaf
+Time: awfa
+Name: Carbonara x2---rest: Mama Italia | Price: 192
+Name: Shrimp in sweet and sour sauce with rice x4---rest: Thai Life | Price: 684
+Total price: 876
