@@ -1,7 +1,7 @@
-Name user: rwfw
-Telephone: afwf
-Street: fwafw
-Time: awfwaf
-Name: Ravioli with mushrooms x2---rest: Mama_Italia | Price: 192
-Name: Mushroom soup x4---rest: Ukrainian_food | Price: 312
-Total price: 1020
+Name user: f
+Telephone: f
+Street: f
+Time: f
+Name: Ravioli with mushrooms x3---Restaurant: Mama_Italia | Price: 288
+Name: Philadelphia with shrimp x2---Restaurant: Sushi | Price: 256
+Total price: 544

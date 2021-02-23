@@ -120,11 +120,12 @@ public:
 		return m_RaitRest;
 	}
 
-	void EditTheRestoran()
+	void EditTheRestoran() // changed
 	{
+		cin.ignore();
 		string change;
 		cout << "What needs to be changed? (1 - Name of Restoran, 2 - Street Restoran, 3 - Raiting)" << endl;
-		char choose = _getche();
+		char choose = _getch();
 		cout << "\nEnter the new info: ";
 		getline(cin, change);
 		switch (choose)
@@ -132,25 +133,25 @@ public:
 		case '1':  m_NameRest = change; break;
 
 		case '2': m_StreetRest = change; break;
-		case '3': m_RaitRest = change; break;
+		case '3': m_RaitRest = change += "/10"; break;
 		default: cout << "incorrect choose" << endl;
 		}
-
 	}
-	void EditTheDish(int index)
+
+	void EditTheDish(int index) // changed
 	{
 		for (auto& i : m_Menu)
 			if ((index - 1) == i.first)
 			{
+				cin.ignore();
 				string change;
-				cout << "What needs to be changed? (1 - Name of Dish, 2 - About Dish, 3 - Weight Dish, 4 - Price Dish)" << endl;
-				char choose = _getche();
+				cout << "What needs to be changed? 1 - Name of Dish, 2 - Inf About Dish, 3 - Weight of Dish, 4 - Price of Dish" << endl;
+				char choose = _getch();
 				cout << "\nEnter the new info: ";
 				getline(cin, change);
 				switch (choose)
 				{
 				case '1':  i.second.m_Name = change; break;
-
 				case '2': i.second.m_About = change; break;
 				case '3':i.second.m_Weight = change; break;
 				case '4':i.second.m_Price = change; break;
@@ -178,30 +179,46 @@ public:
 		return m_buy[n - 1];
 	}
 
-	void AddElement(Dish obj, int countDish = 1)
+	void AddElement(Dish obj, int countDish) // changed
 	{
-		obj.m_numberOfDish = countDish;
-		m_buy.push_back(obj);
-		nSum += (stoi(obj.m_Price) * obj.m_numberOfDish);
-		countDishOfBasket++;
+		if (countDish > 0)
+		{
+			obj.m_numberOfDish = countDish;
+			nSum += (stoi(obj.m_Price) * obj.m_numberOfDish);
+			m_buy.push_back(obj);
+			countDishOfBasket++;
+		}
 	}
 
-	void DelElement(int name)
+	void DelElement(int name, int quantity) // changed
 	{
+		name -= 1;
 		if (name < countDishOfBasket)
 		{
-			m_buy.erase(m_buy.begin() + --name);
-			nSum += (stoi(m_buy[name].m_Price) * m_buy[name].m_numberOfDish);
+			//TODO
+			if (quantity >= m_buy[name].m_numberOfDish)
+			{
+				m_buy.erase(m_buy.begin() + name);
+			}
+			else
+			{
+				m_buy[name].m_numberOfDish-= quantity;
+			}
+			nSum = 0;
+			for (auto i : m_buy)
+			{
+				nSum += (stoi(i.m_Price) * i.m_numberOfDish); // тут напевно можна шось краще придумати, але вже 5-45 і я не соображаю і хочу хоть трохи поспати)
+			}
 		}
 	}
 
 	void ShowBasket()
 	{
-		cout << "===================In basket===========\n";
+		cout << "===================In basket=================\n";
 		int i = 0;
 		for_each(m_buy.begin(), m_buy.end(), [&](Dish p)
 			{
-				cout << "ID: " << ++i << "\tDish: " << p.m_Name << "\nCost: " << p.m_Price << endl;
+				cout << "ID: " << ++i << "\nDish: " << p.m_Name << "\nQuantity: " << p.m_numberOfDish << "\nCost: " << p.m_Price << endl; // changed
 			});
 		cout << "\nTotal: " << nSum << endl;
 	}
@@ -219,7 +236,7 @@ public:
 			outFile << "Time: " << t << endl;
 			for_each(m_buy.begin(), m_buy.end(),
 				[&](Dish vd) {
-					outFile << "Name: " << vd.m_Name << " x" << vd.m_numberOfDish << "---rest: " << vd.m_NameRest << " | ";
+					outFile << "Name: " << vd.m_Name << " x" << vd.m_numberOfDish << "---Restaurant: " << vd.m_NameRest << " | ";
 					outFile << "Price: " << stoi(vd.m_Price) * vd.m_numberOfDish << endl;
 				});
 			outFile << "Total price: " << nSum << endl;
@@ -283,11 +300,12 @@ int main()
 {
 
 	Admin adm{
-	vector<Restoran>{ Restoran("Mama_Italia", "Ternopil","7/10","Mama_Italia.txt"), Restoran("Thai_life","Lviv","8/10","Thai_life.txt"),
-		Restoran("Sushi", "Kiev","9/10","Sushi.txt"), Restoran("Ukrainian_food", "Kiev","9/10","Ukrainian_food.txt") } };
+	vector<Restoran>{ Restoran("Mama_Italia", "Ternopil","7/10","Mama_Italia.txt"), Restoran("Thai_life","Lviv","6/10","Thai_life.txt"),
+		Restoran("Sushi", "Kiev","9/10","Sushi.txt"), Restoran("Ukrainian_food", "Kiev","8/10","Ukrainian_food.txt") } };
 	Basket bas;
 	bool avtorization = false;
-	/*bool work = true;
+	bool work = true;
+	int baskInd = 1; // added
 	while (work)
 	{
 		int choice;
@@ -296,7 +314,7 @@ int main()
 			cout << "0 - Avtorization to Admin" << endl;
 			cout << "1 - Show restaurants." << endl;
 			cout << "2 - Search by restaurant name." << endl;
-			cout << "3 - Search by restaurant rating." << endl;
+			cout << "3 - Show restaurants by rating." << endl;
 			cout << "4 - Go to basket." << endl;
 			cout << "5 - Exit." << endl;
 			cin >> choice;
@@ -319,53 +337,35 @@ int main()
 				count = 0;
 				cout << "Type number of restaurant to see menu, type 0 to go back " << endl;
 				cin >> count;
-				if (count == 0)
+				if (count <= adm.getVectorRest().size())
 				{
-					continue;
-				}
-				else
-				{
-					adm.getVectorRest()[count - 1].ShowMenu();
-					int dish = 0;
-					int YorN = 0;
-					bool addDish = true;
-					cout << "Dou you want to add dish to basket? " << endl;
-					cout << "1 - Yes, 2 - No" << endl;
-					cin >> YorN;
-					if (YorN == 1)
-					{
-						cout << "Add dish to basket: ";
-						cin >> dish;
-						cout << "How match?" << endl;
-						cin >> YorN;
-
-						bas.AddElement(adm.getVectorRest()[count - 1].getDish(dish - 1), YorN);
-						while (addDish)
-						{
-							cout << "Dou you want to add another dish from that restaurant?" << endl;
-							cout << "1 - Yes, 2 - No" << endl;
-							cin >> YorN;
-							if (YorN == 1)
-							{
-								dish = 0;
-								cout << "Add dish to basket: ";
-								cin >> dish;
-								cout << "How match?" << endl;
-								cin >> YorN;
-								bas.AddElement(adm.getVectorRest()[count - 1].getDish(dish - 1), YorN);
-							
-
-							}
-							else
-							{
-								addDish = false;
-							}
-						}
-					}
-					else
+					if (count == 0)
 					{
 						break;
 					}
+					else
+					{
+						adm.getVectorRest()[count - 1].ShowMenu();
+						int dish = 1;
+						cout << "Choose dishes, type 0 to go back" << endl;
+						while (dish != 0)
+						{
+							cin >> dish;
+							if (dish != 0)
+							{
+								int quantity = 0;
+								cout << "How much you want to add?" << endl;
+								cin >> quantity;
+								bas.AddElement(adm.getVectorRest()[count - 1].getDish(dish - 1), quantity); // ?
+								bas.getDish(baskInd++).m_NameRest = adm.getVectorRest()[count - 1].getName(); // ?
+							}
+						}
+
+					}
+				}
+				else
+				{
+					cout << "Wrong input!" << endl;
 				}
 			}break;
 			case 2:
@@ -374,44 +374,91 @@ int main()
 				string name;
 				cout << "Type name of the restaurant to search: " << endl;
 				getline(cin, name);
-				int Num = 1;
-				for (auto& i : adm.getVectorRest())
+				bool search = false;
+				int Num = 0;
+				for (auto i : adm.getVectorRest()) // ?
 				{
 					if (i.getName() == name)
 					{
-						cout << "There is restaurant with name \"" << name << "\", it`s number is: " << Num << endl;
+						cout << "There is restaurant with name \"" << name << "\"" << endl;
+						search = true;
+						adm.getVectorRest()[Num].ShowInfoRest();
+						int dish = 1;
+						cout << "Choose dishes, type 0 to go back" << endl;
+						while (dish != 0)
+						{
+							cin >> dish;
+							if (dish != 0)
+							{
+								int count = 0;
+								cout << "How much you want to add?" << endl;
+								cin >> count;
+								bas.AddElement(adm.getVectorRest()[Num].getDish(dish - 1), count); // ?
+								bas.getDish(baskInd++).m_NameRest = adm.getVectorRest()[Num].getName();
+							}
+						}
 					}
 					Num++;
 				}
-			}break;
-			case 3:
-			{
-
-			}break;
-			case 4:
-			{
-				int choice = 0;
-				cout << "Show basket? - 1, SaveCheck - 2, Del dish in Basket - 3" << endl;
-				cin >> choice;
-				if (choice == 1)
-					bas.ShowBasket();
-				if (choice == 3)
+				if (search == false)
 				{
-					int del;
-					cout << "Enter the position to del: ";
-					cin >> del;
-					bas.DelElement(del);
+					cout << "Restaurant not found!" << endl;
 				}
-				if (choice == 2)
+			}break;
+			case 3: // added
+			{
+				sort(adm.getVectorRest().begin(), adm.getVectorRest().end(), [](Restoran n1, Restoran n2)
+					{
+						return n1.getRating() < n2.getRating();
+					});
+				int count = 1;
+				for (auto& i : adm.getVectorRest())
 				{
-					string name; string street; string number; string time;
+					cout << count << ": ";
+					cout << "Name: "<<i.getName() << " Rating: "<< i.getRating() << endl;
+					count++;
+				}
+					
+			}break;
+			case 4: // changed
+			{
+				bool basket = true;
+				int choice = 0;
+				cout << "1 - Show basket, 2 - Save Check, 3 - Delete dish in Basket, 4 - Exit from basket" << endl;
+				while (basket)
+				{
+					cin >> choice;
+					if (choice == 1)
+						bas.ShowBasket();
+					else if (choice == 3)
+					{
+						int del = 0;
+						int quantity = 0;
+						cout << "Enter the position to delete: " << endl;
+						cin >> del;
+						cout << "Enter quantity to delete: " << endl;
+						cin >> quantity;
+						bas.DelElement(del, quantity);
+					}
+					else if (choice == 2)
+					{
+						string name; string street; string number; string time;
 
-					cout << "Enter your name: "; cin >> name;
-					cout << "Enter your phone number: "; cin >> number;
-					cout << "Enter your street: "; cin >> street;
-					cout << "Time: "; cin >> time;
+						cout << "Enter your name: "; cin >> name;
+						cout << "Enter your phone number: "; cin >> number;
+						cout << "Enter your street: "; cin >> street;
+						cout << "Time: "; cin >> time;
 
-					bas.SaveCheck("testSaveCheck.txt", name, street, number, time);
+						bas.SaveCheck("testSaveCheck.txt", name, street, number, time);
+					}
+					else if (choice == 4)
+					{
+						break;
+					}
+					else
+					{
+						cout << "Wrong input!" << endl;
+					}
 				}
 			}break;
 			case 5:
@@ -435,29 +482,35 @@ int main()
 				cout << i.getName() << endl;
 				count++;
 			}
-			cout << "Select restoran to edit information!" << endl;
+			cout << "Select restoraunt to edit information!" << endl;
 			cin >> count;
 			adm.getVectorRest()[count - 1].ShowInfoRest();
-			cout << "Change info of rest? - press 1\tChange info of menu? - press 2\tCreate a new dish? - press 3";
-			chang = _getche();
+			cout << "1 - Change info of rest, 2 - Change info of menu?, 3 - Create a new dish?, 4 - Exit" << endl;
+			chang = _getch();
 			if (chang == '1') adm.getVectorRest()[count - 1].EditTheRestoran();
-			if (chang == '2')
+			else if (chang == '2')
 			{
 				int ind;
 				adm.getVectorRest()[count - 1].ShowMenu();
-				cout << "Enter the number dish to edit" << endl;
+				cout << "Enter the number of dish to edit" << endl;
 				cin >> ind;
 				adm.getVectorRest()[count - 1].EditTheDish(ind);
 			}
-			if (chang == '3')
+			else if (chang == '3')
 			{
+				cin.ignore();
 				string n, a, w, p;
-				cout << "Enter the name fo new Dish" << endl; cin >> n;
-				cout << "Enter information of new Dish " << endl; cin >> a;
-				cout << "Enter the weigtht of new Dish" << endl; cin >> w;
-				cout << "Enter the price of new Dish" << endl; cin >> p;
+				cout << "Enter the name of new Dish" << endl; cin >> n;
+				cout << "Enter information about new Dish " << endl; cin >> a;
+				cout << "Enter weigtht of the new Dish" << endl; cin >> w;
+				cout << "Enter price of the new Dish" << endl; cin >> p;
 				adm.getVectorRest()[count - 1].CreateNewDish(n, a, w, p);
 			}
+			else if (chang == '4')
+			{
+				break;
+			}
+			else cout << "Wrong input!" << endl;
 		}
-	}*/
+	}
 }
