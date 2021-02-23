@@ -15,7 +15,7 @@ Admin::Admin(vector<Restoran> restorans) :m_restorans(restorans)
 			m_admPass.push_back(make_pair(f, s));
 		}
 	}
-	catch (exception& ex)
+	catch (exception & ex)
 	{
 		cout << "Error: " << ex.what() << endl;
 	}

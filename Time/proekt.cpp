@@ -1,4 +1,4 @@
-﻿#include "Admin.h"
+#include "Admin.h"
 
 int main()
 {
@@ -118,10 +118,10 @@ int main()
 				for (auto& i : adm.getVectorRest())
 				{
 					cout << Num << ": ";
-					cout << "Name: "<<i.getName() << " Rating: "<< i.getRating() << endl;
+					cout << "Name: " << i.getName() << " Rating: " << i.getRating() << endl;
 					Num++;
 				}
-					
+
 			}break;
 			case 4:
 			{

@@ -67,7 +67,7 @@ void Basket::SaveCheck(string file, string n, string p, string s, string t)
 			});
 		outFile << "Total price: " << nSum << endl;
 	}
-	catch (exception& ex)
+	catch (exception & ex)
 	{
 		cout << "Error: " << ex.what() << endl;
 	}

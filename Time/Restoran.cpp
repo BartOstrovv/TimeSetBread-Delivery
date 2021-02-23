@@ -19,7 +19,7 @@ Restoran::Restoran(string name, string street, string rait, string namefileMenu)
 			m_Menu.emplace(countDishOfMenu++, temp);
 		}
 	}
-	catch (exception& ex)
+	catch (exception & ex)
 	{
 		cout << "Error open file: " << ex.what() << endl;
 	}
