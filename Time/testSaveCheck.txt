@@ -1,7 +1,0 @@
-Name user: a
-Telephone: a
-Street: a
-Time: a
-Name: Pizza Quattro formaggi x1---Restaurant: Mama_Italia | Price: 129
-Name: Pizza Quattro formaggi x1---Restaurant: Mama_Italia | Price: 129
-Total price: 258
