@@ -1,52 +1,52 @@
-Quattro formaggi
+Pizza Quattro formaggi
 Cream, pear, cheese: mozzarella, ricotta, chips, parmesan and walnuts.
 380
 129
-Parma
+Pizza Parma
 Mozzarella and Parmesan cheeses, Parma ham, cream sauce, arugula.
 360
 126
-Salami
+Pizza Salami
 Grated tomatoes, mozzarella, salami sausage
 370
 116
-Diabola
+Pizza Diabola
 Grated tomatoes, mozzarella, spicy salami, chili peppers.
 390
 99
-Prosciutto
+Pizza Prosciutto
 Grated tomatoes, mozzarella, ham.
 430
 94
-Caprichosa
+Pizza Caprichosa
 Grated tomatoes, mozzarella, ham, fresh mushrooms
 460
 99
-Chorizo
+Pizza Chorizo
 Grated tomatoes, cured sausage, mozzarella and dorbly.
 370
 123
-Calzone
+Pizza Calzone
 Closed pizza with ham, mozzarella, ricotta, parmesan and tomatoes.
 360
 99
-Margherita
+Pizza Margherita
 Grated tomatoes, mozzarella, tomatoes.
 390
 86
-Al Salmone
+Pizza Al Salmone
 Salmon fillet, cream sauce, mozzarella, parmesan, capers, lemon, arugula and dill.
 400
 146
-Ranch
+Pizza Ranch
 Tender chicken, mozzarella, bacon, tomatoes, Ranch sauce.
 460
 124
-Carbonara
+Pizza Carbonara
 Tomatoes, mozzarella, ham, Bavarian sausages and baked egg.
 440
 96
-Frutti di mare
+Pizza Frutti di mare
 Grated tomatoes, mozzarella, seafood cocktail.
 460
 209
@@ -55,6 +55,7 @@ With parmesan cheese and tender cream sauce.
 320
 94
 Carbonar spaghetti
+With tomato sauce and egg.
 300
 93
 Shrimp pasta
