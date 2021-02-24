@@ -1,0 +1,8 @@
+Name user: Zhanna
+Street: Brodivska
+Telephone: 1384922
+Time: 01:30
+Name: Kazuki x2---Restaurant: Sushi | Price: 210
+Name: Chicken soup x2---Restaurant: Ukrainian_food | Price: 136
+Name: Soto ayam soup x4---Restaurant: Thai_life | Price: 508
+Total price: 854

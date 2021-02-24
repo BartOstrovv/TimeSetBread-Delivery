@@ -3,7 +3,6 @@
 
 #include "Dish.h"
 
-
 class Restoran
 {
 protected:
