@@ -9,6 +9,8 @@
 *.exe.recipe
 vs/proekt/v16/
 /x64
+/Debug
+/Time/x64
 # Compiled Object files
 *.slo
 *.lo

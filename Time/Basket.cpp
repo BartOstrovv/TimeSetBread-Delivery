@@ -54,14 +54,15 @@ void Basket::DelElement(int name, int quantity)
 		cout << "Dish not found" << endl;
 }
 
+void Basket::Cancel()
+{
+	m_buy.clear();
+	Basket::nSum = 0;
+}
+
 int Basket::getCountOfBasket()
 {
 	return countDishOfBasket;
-}
-
-void Basket::setNumber(int id, int number)
-{
-	//TOODO
 }
 
 void Basket::ShowBasket()
