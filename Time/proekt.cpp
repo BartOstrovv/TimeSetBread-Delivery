@@ -175,10 +175,11 @@ void AdministratorMenu(Admin& adm, Basket& bas)
 			{
 				cin.ignore();
 				string n, a, w, p;
-				cout << "Enter the name of new Dish" << endl; cin >> n;
-				cout << "Enter the information about new Dish " << endl; cin >> a;
-				cout << "Enter the weight of new Dish" << endl; cin >> w;
-				cout << "Enter the price of new Dish" << endl; cin >> p;
+			
+				cout << "Enter the name of new Dish: "; cin >> n; cin.clear(); cin.ignore();
+				cout << "Enter the information about new Dish: "; getline(cin, a); 
+				cout << "Enter the weight of new Dish: "; cin >> w;
+				cout << "Enter the price of new Dish: ";  cin.ignore();  cin.clear(); cin >> p;
 				adm.getVectorRest()[Num - 1].CreateNewDish(n, a, w, p);
 				cout << "Save changes? 1 - Yes, 2 - No: ";
 				int ind = (char)_getche();
