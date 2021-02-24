@@ -37,12 +37,19 @@ Dish Restoran::getDish(int number)
 
 void Restoran::ShowInfoRest()
 {
-	cout << "Name restoran: " << m_NameRest << endl <<
-		"Street: " << m_StreetRest << endl <<
-		"Raiting: " << m_RaitRest << endl;
-	ShowMenu();
+	cout << "|    Name       |Rating|     Street     |" << endl;
+	cout << "-----------------------------------------" << endl;
+	if (m_NameRest.length() < 8)
+	{
+		cout << "|" << m_NameRest << "\t\t| " << m_RaitRest << " |     " << m_StreetRest << "\t|";
+	}
+	else
+	{
+		cout << "|" << m_NameRest << "\t| " << m_RaitRest << " |     " << m_StreetRest << "\t|";
+	}
 	cout << endl;
 }
+
 void Restoran::SaveChangeMenu()
 {
 	ofstream file(m_fileName, ofstream::out);
@@ -66,10 +73,20 @@ void Restoran::SaveChangeMenu()
 void Restoran::ShowMenu()
 {
 	cout << "=======MENU=======" << endl;
+	cout << "|Num| Name | Weight | Price |" << endl;
+	cout << "----------------------------------" << endl;
 	for (auto& i : m_Menu)
 	{
-		cout << "ID: " << i.first + 1 << endl;
-		i.second.Show();
+		if ((i.first + 1) < 10)
+		{
+			cout << "| " << i.first + 1 << " |"; // TODOO
+			i.second.Show();
+		}
+		else
+		{
+			cout << "|" << i.first + 1 << " |";
+			i.second.Show();
+		}
 	}
 	cout << endl;
 }
@@ -88,7 +105,7 @@ void Restoran::EditTheRestoran()
 {
 	cin.ignore();
 	string change;
-	cout << "What needs to be changed? (1 - Name of Restoran, 2 - Street Restoran, 3 - Raiting)" << endl;
+	cout << "What needs to be changed? 1 - Name of Restoraunt, 2 - Street Restoran, 3 - Rating" << endl;
 	char choose = _getch();
 	cout << "\nEnter the new info: ";
 	getline(cin, change);
@@ -98,8 +115,9 @@ void Restoran::EditTheRestoran()
 
 	case '2': m_StreetRest = change; break;
 	case '3': m_RaitRest = change += "/10"; break;
-	default: cout << "incorrect choose" << endl;
+	default: cout << "Incorrect input!" << endl;
 	}
+	system("cls");
 }
 
 void Restoran::EditTheDish(int index)
@@ -119,7 +137,7 @@ void Restoran::EditTheDish(int index)
 			case '2': i.second.m_About = change; break;
 			case '3':i.second.m_Weight = change; break;
 			case '4':i.second.m_Price = change; break;
-			default: cout << "incorrect choose" << endl;
+			default: cout << "Incorrect input!" << endl;
 			}
 		}
 }

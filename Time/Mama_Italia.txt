@@ -1,7 +1,7 @@
 Pizza Quattro formaggi
 Cream, pear, cheese: mozzarella, ricotta, chips, parmesan and walnuts.
 380
-1000
+135
 Pizza Parma
 Mozzarella and Parmesan cheeses, Parma ham, cream sauce, arugula.
 360
@@ -50,7 +50,7 @@ Pizza Frutti di mare
 Grated tomatoes, mozzarella, seafood cocktail.
 460
 209
-Fetucini with mushrooms and ham
+Fetucini with mushrooms
 With parmesan cheese and tender cream sauce.
 320
 94
