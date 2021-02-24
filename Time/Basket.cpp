@@ -24,10 +24,8 @@ void Basket::AddElement(Dish obj, int countDish)
 			m_buy.push_back(obj);
 			countDishOfBasket++;
 		}
-		for (auto i : m_buy)
-		{
-			nSum += (stoi(i.m_Price) * i.m_numberOfDish);
-		}
+		
+		nSum += (stoi(obj.m_Price) * obj.m_numberOfDish);
 	}
 }
 
@@ -48,15 +46,22 @@ void Basket::DelElement(int name, int quantity)
 		nSum = 0;
 		for (auto i : m_buy)
 		{
-			nSum += (stoi(i.m_Price) * i.m_numberOfDish); // тут напевно можна шось краще придумати, але вже 5-45 і я не соображаю і хочу хоть трохи поспати) 
+			nSum += (stoi(i.m_Price) * i.m_numberOfDish);
 		}
 		countDishOfBasket--;
 	}
+	else
+		cout << "Dish not found" << endl;
 }
 
 int Basket::getCountOfBasket()
 {
 	return countDishOfBasket;
+}
+
+void Basket::setNumber(int id, int number)
+{
+	//TOODO
 }
 
 void Basket::ShowBasket()
@@ -65,7 +70,17 @@ void Basket::ShowBasket()
 	int i = 0;
 	for_each(m_buy.begin(), m_buy.end(), [&](Dish p)
 		{
-			cout << "ID: " << ++i << "\nDish: " << p.m_Name << "\nQuantity: " << p.m_numberOfDish << "\nCost: " << p.m_Price << endl;
+			int strSize = p.m_Name.size();
+
+			cout << "ID: " << ++i << "\t | ";
+			if (strSize <= 12)
+			{
+				cout << "Dish: " << p.m_Name.append(15 - strSize ,' ');
+			}
+			else
+				cout << "Dish: " << p.m_Name.erase(12) + "...";
+			cout << " | " << "Quantity: " << p.m_numberOfDish << "\t | " << "Cost: " << p.m_Price << endl;
+
 		});
 	cout << "\nTotal: " << nSum << endl;
 }
