@@ -26,7 +26,7 @@ Teriyaki chicken
 Green beans, carrot, teriyaki sauce, basmati rice, sesame.
 450
 107
-Chicken in sweet and sour sauce with rice
+Chicken in sour sauce
 Chicken in sweet and sour sauce with bell pepper, carrots, pineapple, sweet onion, peanuts.
 500
 107
@@ -66,7 +66,7 @@ Soto ayam soup
 Vegetable broth, rice noodles, eggs, chicken fillet, cherry tomatoes, green onion.
 500
 127
-Shrimp in sweet and sour sauce with rice
+Shrimp in sweet sauce
 Shrimp in sweet and sour sauce with bell pepper, carrots, pineapple, sweet onion, peanuts.
 475
 171

@@ -24,4 +24,5 @@ public:
 	void EditTheRestoran();
 	void EditTheDish(int index);
 	void CreateNewDish(string name, string about, string weight, string price);
+	int getCountOfDish();
 };

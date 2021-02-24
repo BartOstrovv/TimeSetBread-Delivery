@@ -55,14 +55,31 @@ void AddDish(Admin& adm, Basket& bas)
 		adm.getVectorRest()[Num - 1].ShowMenu();
 		cout << "Choose dish from menu:" << endl;
 		cin >> dish;
-		cout << "How much you want to add?" << endl;
-		cin >> quantity;
-		bas.AddElement(adm.getVectorRest()[Num - 1].getDish(dish - 1), quantity);
-		bas.getDish(bas.getCountOfBasket()).m_NameRest = adm.getVectorRest()[Num - 1].getName();
+		if ((dish >= 1) && (dish <= adm.getVectorRest()[Num - 1].getCountOfDish()))
+		{
+			cout << "How much you want to add?" << endl;
+			cin >> quantity;
+			if (quantity > 0)
+			{
+				bas.AddElement(adm.getVectorRest()[Num - 1].getDish(dish - 1), quantity);
+				bas.getDish(bas.getCountOfBasket()).m_NameRest = adm.getVectorRest()[Num - 1].getName();
+			}
+			else
+			{
+				system("cls");
+				cout << "Quantity is 0, so nothing is added to the basket" << endl << endl;
+			}
+		}
+		else
+		{
+			system("cls");
+			cout << "Wrong input!" << endl << endl;
+		}
 	}
 	else
 	{
-		cout << "Wrong input!" << endl;
+		system("cls");
+		cout << "Wrong input!" << endl << endl;
 	}
 }
 
@@ -84,15 +101,32 @@ void SearchRestaurantName(Admin& adm, Basket& bas)
 			adm.getVectorRest()[Num].ShowInfoRest();
 			cout << "Choose dish from menu:" << endl;
 			cin >> dish;
-			cout << "How much you want to add?" << endl;
-			cin >> quantity;
-			bas.AddElement(adm.getVectorRest()[Num].getDish(dish - 1), quantity);
-			bas.getDish(bas.getCountOfBasket()).m_NameRest = adm.getVectorRest()[Num].getName();
+			if ((dish >= 1) && (dish <= adm.getVectorRest()[Num].getCountOfDish()))
+			{
+				cout << "How much you want to add?" << endl;
+				cin >> quantity;
+				if (quantity > 0)
+				{
+					bas.AddElement(adm.getVectorRest()[Num].getDish(dish - 1), quantity);
+					bas.getDish(bas.getCountOfBasket()).m_NameRest = adm.getVectorRest()[Num].getName();
+				}
+				else
+				{
+					system("cls");
+					cout << "Quantity is 0, so nothing is added to the basket" << endl << endl;
+				}
+			}
+			else
+			{
+				system("cls");
+				cout << "Wrong input!" << endl << endl;
+			}
 		}
 		Num++;
 	}
 	if (search == false)
 	{
+		system("cls");
 		cout << "Restaurant not found!" << endl;
 	}
 }
@@ -165,9 +199,63 @@ void AdministratorMenu(Admin& adm, Basket& bas)
 	}
 }
 
-void BasketMenu(Basket&bas)
+void BasketMenu(Basket& bas)
 {
-	// todo
+	bool basket = true;
+	int choice = 0;
+	int dish = 0;
+	int quantity = 0;
+	while (basket)
+	{
+		cout << "1 - Show basket, 2 - Save Check, 3 - Delete dish in basket, 4 - Clear basket, 5 - Exit from basket" << endl;
+		cin >> choice;
+		if ((choice > 0) && (choice < 6))
+		{
+			switch (choice)
+			{
+			case 1:
+			{
+				bas.ShowBasket();
+			}break;
+			case 2:
+			{
+				system("cls");
+				string name; string street; string number; string time;
+
+				cout << "Enter your name: "; cin >> name;
+				cout << "Enter your phone number: "; cin >> number;
+				cout << "Enter your street: "; cin >> street;
+				cout << "Time: "; cin >> time;
+				string nameToFile = "Orders\\Client_" + name + ".txt";
+				bas.SaveCheck(nameToFile, name, street, number, time);
+			}break;
+			case 3:
+			{
+				cout << "Enter the position to delete: " << endl;
+				cin >> dish;
+				cout << "Enter quantity to delete: " << endl;
+				cin >> quantity;
+				bas.DelElement(dish, quantity);
+				system("cls");
+				cout << "Dish deleted." << endl;
+			}break;
+			case 4:
+			{
+				bas.Cancel();
+				system("cls");
+				cout << "Your basket is empty now." << endl;
+			}break;
+			case 5:
+			{
+				basket = false;
+			}break;
+			default:
+			{
+				cout << "Wrong input!" << endl;
+			}
+			}
+		}
+	}
 }
 
 int main()
@@ -178,9 +266,6 @@ int main()
 	Basket bas;
 	bool avtorization = false;
 	bool work = true;
-	int quantity = 0;
-	int Num = 1;
-	int dish = 1;
 	while (work)
 	{
 		int choice;
@@ -200,51 +285,15 @@ int main()
 			case 1:
 			{	ShowRestaurants(adm, false);
 			AddDish(adm, bas);
-			system("cls"); }break;
+			system("cls");
+			 }break;
 			case 2:
 			{	SearchRestaurantName(adm, bas);
 			system("cls"); }break;
 			case 3:
 			{	SortRestaurantsByRate(adm); }break;
 			case 4:
-			{
-				bool basket = true;
-				int choice = 0;
-				cout << "1 - Show basket, 2 - Save Check, 3 - Delete dish in Basket, 4 - Exit from basket" << endl;
-				while (basket)
-				{
-					cin >> choice;
-					if (choice == 1)
-						bas.ShowBasket();
-					else if (choice == 3)
-					{
-						cout << "Enter the position to delete: " << endl;
-						cin >> dish;
-						cout << "Enter quantity to delete: " << endl;
-						cin >> quantity;
-						bas.DelElement(dish, quantity);
-					}
-					else if (choice == 2)
-					{
-						string name; string street; string number; string time;
-
-						cout << "Enter your name: "; cin >> name;
-						cout << "Enter your phone number: "; cin >> number;
-						cout << "Enter your street: "; cin >> street;
-						cout << "Time: "; cin >> time;
-						string nameToFile = "Orders\\Client_" + name + ".txt";
-						bas.SaveCheck(nameToFile, name, street, number, time);
-					}
-					else if (choice == 4)
-					{
-						break;
-					}
-					else
-					{
-						cout << "Wrong input!" << endl;
-					}
-				}
-			}break;
+			{	BasketMenu(bas); }break;
 			case 5:
 			{	work = false; }break;
 			default:

@@ -72,22 +72,22 @@ void Restoran::SaveChangeMenu()
 }
 void Restoran::ShowMenu()
 {
-	cout << "=======MENU=======" << endl;
-	cout << "|Num| Name | Weight | Price |" << endl;
-	cout << "----------------------------------" << endl;
-	for (auto& i : m_Menu)
-	{
-		if ((i.first + 1) < 10)
+	cout << "=========================MENU=========================" << endl;
+	cout << "|Num|\t\tName\t     \t    | Weight | Price |" << endl;
+	cout << "------------------------------------------------------" << endl;
+	for_each(m_Menu.begin(), m_Menu.end(), [](pair<int, Dish>i)
 		{
-			cout << "| " << i.first + 1 << " |"; // TODOO
-			i.second.Show();
-		}
-		else
-		{
-			cout << "|" << i.first + 1 << " |";
-			i.second.Show();
-		}
-	}
+			if ((i.first + 1) < 10)
+			{
+				cout << "| " << i.first + 1 << " |"; // TODOO
+				i.second.Show();
+			}
+			else
+			{
+				cout << "|" << i.first + 1 << " |";
+				i.second.Show();
+			}
+		});
 	cout << endl;
 }
 
@@ -145,4 +145,9 @@ void Restoran::EditTheDish(int index)
 void Restoran::CreateNewDish(string name, string about, string weight, string price)
 {
 	m_Menu.emplace(countDishOfMenu++, Dish(name, about, weight, price));
+}
+
+int Restoran::getCountOfDish()
+{
+	return Restoran::countDishOfMenu;
 }
