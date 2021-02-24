@@ -11,7 +11,7 @@ protected:
 public:
 	Dish& getDish(int n);
 	void AddElement(Dish obj, int countDish);
-	void DelElement(int name, int quantity);
+	void DelElement(int id, int quantity);
 	void Cancel();
 	void ShowBasket();
 	void SaveCheck(string file, string n, string p, string s, string t);
